@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+
+const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date);
+const projects = await getCollection('projects', (p) => !p.data.draft);
+const iso = (d: Date) => d.toISOString().slice(0, 10);
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Josef Tot',
+  url: 'https://joseftot.com/',
+  author: { '@type': 'Person', name: 'Josef Tot', url: 'https://joseftot.com/about/' },
+};
+---
+<Base cmd="./whoami --verbose" jsonld={jsonld}>
+  <h1 class="sr-only">Josef Tot</h1>
+  <Logo text="JOSEF TOT" class="logo-wide" />
+  <Logo text={'JOSEF\nTOT'} class="logo-tall" />
+
+  <p class="typed lede" data-type>
+    IT guy and developer. I build things, take them apart again, and write down what I learned on the way. This is the log.
+  </p>
+
+  <h2 class="section-h">Directory</h2>
+  <table class="ls">
+    <tbody>
+      <tr><td class="perm">drwxr-xr-x</td><td class="size">{posts.length}</td><td class="name"><a href="/blog/">blog/</a></td><td class="note">thoughts, methods, field notes</td></tr>
+      <tr><td class="perm">drwxr-xr-x</td><td class="size">{projects.length}</td><td class="name"><a href="/projects/">projects/</a></td><td class="note">things I built, and what state they are in</td></tr>
+      <tr><td class="perm">-rw-r--r--</td><td class="size">1</td><td class="name"><a href="/about/">about.md</a></td><td class="note">who is behind this machine</td></tr>
+      <tr><td class="perm">-rwxr-xr-x</td><td class="size">1</td><td class="name"><a href="/play/">invaders</a></td><td class="note">shall we play a game?</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-h">Recent log entries</h2>
+  <ul class="log">
+    {posts.slice(0, 5).map((p) => (
+      <li>
+        <a href={`/blog/${p.id}/`}>
+          <time datetime={iso(p.data.date)}>{iso(p.data.date)}</time>
+          <span class="t">{p.data.title}</span>
+          <span class="tags">{p.data.tags.map((t) => `#${t}`).join(' ')}</span>
+          <span class="d">{p.data.description}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <p class="tip">
+    TIP &mdash; the prompt at the bottom is real. Start typing anywhere, or try <kbd>help</kbd>, <kbd>ls</kbd>, <kbd>cd blog</kbd>, <kbd>theme light</kbd>. Not every command is documented.
+  </p>
+</Base>

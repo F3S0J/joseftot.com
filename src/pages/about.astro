@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Josef Tot',
+  url: 'https://joseftot.com/',
+  jobTitle: 'IT professional and developer',
+};
+---
+<Base title="About" description="Who is behind joseftot.com." cmd="cat about.md" jsonld={jsonld}>
+  <h1>About</h1>
+  <div class="prose" style="margin-top:2rem">
+    <p>
+      I am Josef Tot, an IT guy and developer based in Austria. This site is where I keep my notes in the open:
+      how I approach problems, the tools I use, and the projects that come out of it.
+    </p>
+    <p><span class="ph">[PLACEHOLDER]</span> Two or three sentences on your background: what you do for a living, what kind of systems you work on, how long you have been at it.</p>
+
+    <h2>What you will find here</h2>
+    <ul>
+      <li><a href="/blog/">Blog</a> &mdash; thoughts and methods, written down while they are still fresh.</li>
+      <li><a href="/projects/">Projects</a> &mdash; things I built, with an honest status next to each.</li>
+      <li><a href="/play/">A game</a> &mdash; because every proper terminal has one hidden somewhere.</li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p><span class="ph">[PLACEHOLDER]</span> e-mail address / GitHub / LinkedIn &mdash; whichever you want public.</p>
+  </div>
+</Base>

@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+const projects = (await getCollection('projects', (p) => !p.data.draft)).sort((a, b) => a.data.order - b.data.order || b.data.year - a.data.year);
+---
+<Base title="Projects" description="Things Josef Tot has built, and what state they are in." cmd="ls -l --status">
+  <h1>Projects</h1>
+  <p class="lede dim">Things I built, and what state they are in. Some shipped, some are experiments that taught me something.</p>
+  <ul class="cards" style="margin-top:2rem">
+    {projects.map((p) => (
+      <li>
+        <a class="card" href={`/projects/${p.id}/`}>
+          <span class="top"><span class="badge" data-s={p.data.status}>[{p.data.status.toUpperCase()}]</span><span>{p.data.year}</span></span>
+          <h2>{p.data.title}</h2>
+          <p>{p.data.description}</p>
+          <span class="stack">{p.data.stack.join(' · ')}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Base>

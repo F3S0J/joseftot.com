@@ -1,0 +1,115 @@
+---
+import '@fontsource-variable/jetbrains-mono/wght.css';
+import '@fontsource/vt323/latin-400.css';
+import '../styles/site.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  cmd?: string;          // the command "typed" above the page content
+  jsonld?: object;
+  article?: boolean;
+}
+const SITE = 'Josef Tot';
+const {
+  title,
+  description = 'Josef Tot — IT guy and developer. Notes on methods, tools and the things I build.',
+  cmd,
+  jsonld,
+  article = false,
+} = Astro.props;
+
+const path = Astro.url.pathname;
+const fullTitle = title ? `${title} — ${SITE}` : `${SITE} — IT, code, field notes`;
+const canonical = new URL(path, Astro.site);
+// a post is a file, so its prompt sits in the parent directory
+const dir = path.replace(/^\/(blog|projects)\/.+$/, '/$1/');
+const cwd = dir === '/' ? '~' : '~' + dir.replace(/\/$/, '');
+const tabs = [
+  { href: '/', label: 'HOME' },
+  { href: '/blog/', label: 'BLOG' },
+  { href: '/projects/', label: 'PROJECTS' },
+  { href: '/about/', label: 'ABOUT' },
+  { href: '/play/', label: 'PLAY' },
+];
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#020a04" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="Josef Tot — blog" href="/rss.xml" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline src="/js/theme.js"></script>
+    {jsonld && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="crt" aria-hidden="true"></div>
+
+    <div class="screen">
+      <header>
+        <div class="statusbar">
+          <a class="brand" href="/" aria-label="Josef Tot, home">TOT<b>//</b>OS</a>
+          <div class="meta">
+            <span class="clock" aria-hidden="true"></span>
+            <div class="themes" role="group" aria-label="Colour theme">
+              <span aria-hidden="true">THEME</span>
+              <button type="button" data-set="green" aria-pressed="false" aria-label="Green terminal theme" title="green">G</button>
+              <button type="button" data-set="dark" aria-pressed="false" aria-label="Dark theme" title="dark">D</button>
+              <button type="button" data-set="light" aria-pressed="false" aria-label="Light theme" title="light">L</button>
+              <button type="button" data-set="mono" aria-pressed="false" aria-label="Black and white theme" title="black &amp; white">M</button>
+            </div>
+          </div>
+        </div>
+        <nav aria-label="Main">
+          <ul class="tabs">
+            {tabs.map((t) => (
+              <li><a href={t.href} aria-current={isCurrent(t.href) ? 'page' : undefined}>{t.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </header>
+
+      <main id="main">
+        {cmd && (
+          <p class="prompt" aria-hidden="true"><span class="ps1">guest@joseftot:{cwd}</span><span class="cmd">{cmd}</span></p>
+        )}
+        <slot />
+      </main>
+
+      <footer class="foot">
+        <span>&copy; {new Date().getFullYear()} Josef Tot &middot; end of transmission</span>
+        <nav aria-label="Footer">
+          <a href="/rss.xml">rss</a>
+          <a href="/imprint/">imprint</a>
+        </nav>
+      </footer>
+    </div>
+
+    <div class="term">
+      <div class="term-inner">
+        <div class="term-out" role="log" aria-live="polite" aria-label="Command output" hidden></div>
+        <form class="term-row" autocomplete="off">
+          <label for="cmd"><span class="host">guest@joseftot:</span><span class="path">{cwd}</span>$</label>
+          <input id="cmd" name="cmd" type="text" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="type 'help'" enterkeyhint="go" />
+          <button type="button" data-run="help" aria-label="Show commands">?</button>
+        </form>
+      </div>
+    </div>
+
+    <script is:inline src="/js/terminal.js" defer></script>
+    <slot name="scripts" />
+  </body>
+</html>

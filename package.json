@@ -1,0 +1,21 @@
+{
+  "name": "joseftot",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource/vt323": "^5.3.0",
+    "astro": "^7.3.3"
+  },
+  "devDependencies": {
+    "figlet": "^1.11.4"
+  }
+}

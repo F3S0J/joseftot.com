@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Space Invaders" description="Play Space Invaders in the terminal at joseftot.com." cmd="./invaders">
+  <h1 class="sr-only">Space Invaders</h1>
+  <div class="game-wrap">
+    <div class="game-col">
+    <div class="game-hud">
+      <span>SCORE <span id="hud-score">00000</span></span>
+      <span>HI <span id="hud-hi">00000</span></span>
+      <span>LIVES <span id="hud-lives">A A A</span></span>
+    </div>
+    <canvas id="game" tabindex="0" aria-label="Space Invaders game. Arrow keys or A and D to move, space to fire, P to pause, M for sound.">
+      Your browser does not support canvas.
+    </canvas>
+    </div>
+    <div class="pad" role="group" aria-label="Touch controls">
+      <button type="button" data-k="l" aria-label="Move left">&lt;&lt;</button>
+      <button type="button" data-k="r" aria-label="Move right">&gt;&gt;</button>
+      <button type="button" data-k="f" aria-label="Fire">FIRE</button>
+    </div>
+    <p class="game-help"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> move &middot; <kbd>space</kbd> fire &middot; <kbd>P</kbd> pause &middot; <kbd>M</kbd> sound &middot; the high score stays in your browser</p>
+  </div>
+  <script is:inline src="/js/invaders.js" defer slot="scripts"></script>
+</Base>

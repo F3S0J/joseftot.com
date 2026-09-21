@@ -1,0 +1,29 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const items = await getCollection('projects', (p) => !p.data.draft);
+  return items.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+const { project } = Astro.props;
+const { Content } = await render(project);
+const d = project.data;
+---
+<Base title={d.title} description={d.description} cmd={`cat ${project.id}.md`}>
+  <article>
+    <header class="post-head">
+      <h1>{d.title}</h1>
+      <p class="lede">{d.description}</p>
+    </header>
+    <dl class="kv">
+      <dt>Status</dt><dd class="badge" data-s={d.status}>{d.status.toUpperCase()}</dd>
+      <dt>Year</dt><dd>{d.year}</dd>
+      {d.stack.length > 0 && (<><dt>Stack</dt><dd>{d.stack.join(' · ')}</dd></>)}
+      {d.repo && (<><dt>Source</dt><dd><a href={d.repo}>{d.repo.replace('https://', '')}</a></dd></>)}
+      {d.url && (<><dt>Live</dt><dd><a href={d.url}>{d.url.replace('https://', '')}</a></dd></>)}
+    </dl>
+    <div class="prose"><Content /></div>
+  </article>
+  <a class="backlink" href="/projects/">&lt;- cd ..</a>
+</Base>

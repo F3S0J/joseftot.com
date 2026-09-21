@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="404" description="File not found." cmd="cat ./that-page">
+  <h1 class="fault">404 &mdash; No such file or directory</h1>
+  <div class="prose" style="margin-top:2rem">
+    <p>The path you asked for is not on this machine. It may have moved, or it never existed.</p>
+    <p class="dim">Try <kbd>cd ~</kbd> in the prompt below, or go <a href="/">home</a>. If you are feeling lost anyway: <kbd>matrix</kbd>.</p>
+  </div>
+</Base>

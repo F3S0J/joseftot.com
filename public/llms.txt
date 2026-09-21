@@ -1,0 +1,9 @@
+# Josef Tot
+
+> Personal site of Josef Tot, IT professional and developer based in Austria. Blog posts on methods, tools and field notes, plus a list of his own projects.
+
+## Sections
+- [Blog](https://joseftot.com/blog/): thoughts, methods, field notes
+- [Projects](https://joseftot.com/projects/): things he built and their status
+- [About](https://joseftot.com/about/)
+- [RSS](https://joseftot.com/rss.xml)

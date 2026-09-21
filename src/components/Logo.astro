@@ -1,0 +1,31 @@
+---
+// The wordmark is drawn from a figlet font as SVG rects, so it never depends on
+// a webfont shipping box-drawing glyphs and it scales cleanly on a phone.
+import figlet from 'figlet';
+
+interface Props { text: string; class?: string }
+const { text, class: cls } = Astro.props;
+
+const rows = figlet.textSync(text, { font: 'ANSI Shadow' }).split('\n').filter((r) => r.trim());
+const CW = 10, CH = 20;
+const cols = Math.max(...rows.map((r) => r.length));
+const solid: string[] = [];
+const shade: string[] = [];
+const T = 3; // stroke of the shadow lines
+rows.forEach((row, y) => {
+  [...row].forEach((ch, x) => {
+    const X = x * CW, Y = y * CH, mx = X + CW / 2 - T / 2, my = Y + CH / 2 - T / 2;
+    if (ch === '█') solid.push(`M${X} ${Y}h${CW}v${CH}h-${CW}z`);
+    const up = '║╝╚╣╠╩╬'.includes(ch), down = '║╗╔╣╠╦╬'.includes(ch);
+    const left = '═╝╗╣╩╦╬'.includes(ch), right = '═╚╔╠╩╦╬'.includes(ch);
+    if (up) shade.push(`M${mx} ${Y}h${T}v${CH / 2 + T / 2}h-${T}z`);
+    if (down) shade.push(`M${mx} ${my}h${T}v${CH / 2 + T / 2}h-${T}z`);
+    if (left) shade.push(`M${X} ${my}h${CW / 2 + T / 2}v${T}h-${CW / 2 + T / 2}z`);
+    if (right) shade.push(`M${mx} ${my}h${CW / 2 + T / 2}v${T}h-${CW / 2 + T / 2}z`);
+  });
+});
+---
+<svg class:list={['logo', cls]} viewBox={`0 0 ${cols * CW} ${rows.length * CH}`} aria-hidden="true" fill="currentColor" shape-rendering="crispEdges">
+  <path class="sh" d={shade.join('')} />
+  <path d={solid.join('')} />
+</svg>
