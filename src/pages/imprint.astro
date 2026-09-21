@@ -7,15 +7,31 @@ import Base from '../layouts/Base.astro';
     <h2>Disclosure (§ 25 MedienG)</h2>
     <p>
       Media owner and publisher: Josef Tot, <span class="ph">[PLACEHOLDER: town]</span>, Austria.<br />
-      Contact: <span class="ph">[PLACEHOLDER: e-mail]</span><br />
-      Purpose of this site: personal blog about IT and software development, and a showcase of my own projects.
+      Contact: <a href="mailto:info@joseftot.com">info@joseftot.com</a><br />
+      Purpose of this site: personal blog about IT and software development, and a showcase of my own projects and music.
     </p>
+
     <h2>Privacy</h2>
     <p>
       This site sets no cookies and runs no tracking. Your theme choice, the command history of the prompt and your
       Space Invaders high score are stored only in your own browser (localStorage / sessionStorage) and never leave it.
-      Fonts and scripts are served from this domain; nothing is loaded from third parties.
+      Fonts, scripts and images are served from this domain.
     </p>
-    <p>The hosting provider processes technically necessary connection data (such as the IP address) to deliver the pages.</p>
+    <p>
+      <strong>SoundCloud:</strong> the <a href="/music/">music page</a> loads nothing from SoundCloud by itself. Only when
+      you press play on a track is SoundCloud's player loaded for that track, and from then on SoundCloud (SoundCloud Global
+      Limited &amp; Co. KG, Berlin) receives your connection data and may set cookies under its own
+      <a href="https://soundcloud.com/pages/privacy">privacy policy</a>. Pressing play is your consent to that.
+    </p>
+    <p>
+      <strong>Hosting:</strong> the hosting provider processes technically necessary connection data (such as the IP address)
+      to deliver the pages and keeps short-lived server logs for security.
+    </p>
+
+    <h2>Security</h2>
+    <p>
+      Found a vulnerability? Please write to <a href="mailto:info@joseftot.com">info@joseftot.com</a>
+      (see also <a href="/.well-known/security.txt">security.txt</a>).
+    </p>
   </div>
 </Base>

@@ -1,12 +1,14 @@
 ---
 title: "RapLab"
-description: "A lyric-writing workbench: a language model over-produces lines, a deterministic judge counts syllables and rhymes and keeps the ones that fit."
-status: experiment
+description: "Lyric workbench: a language model over-produces lines, a deterministic German syllable and rhyme judge keeps the ones that fit."
+status: shipped
 year: 2026
-stack: ["Python", "LLM", "local web app"]
-order: 3
+stack: ["Python", "stdlib HTTP server", "any LLM provider"]
+repo: "https://github.com/F3S0J/raplab"
+order: 6
 ---
 
-Language models are bad at counting syllables and worse at judging their own rhymes.
-RapLab does not ask them to. The model writes far too many candidate lines, and a
-plain, deterministic checker measures syllables and rhyme and throws most of them away.
+The model never counts syllables. It writes too many candidates on purpose; a small rule-based
+judge measures syllables, rhyme and rhyme depth, and I pick.
+
+Write-up: [RapLab: never let the model count syllables](/blog/raplab/).

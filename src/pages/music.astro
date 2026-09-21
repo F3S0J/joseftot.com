@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import tracks from '../data/tracks.json';
+
+type Track = (typeof tracks)[number];
+
+const GROUPS: { key: string; title: string; note: string }[] = [
+  { key: 'production', title: 'Productions', note: 'Beats and instrumentals, 2017. Hip hop, urban, DnB, techno, a little orchestral.' },
+  { key: 'generative', title: 'Generative experiments', note: 'Tracks built from rules instead of by hand: Ableton follow actions and Max for Live devices deciding what plays next.' },
+  { key: 'joet', title: 'JOE T.', note: 'Full-length tracks under my own name, 2019.' },
+  { key: 'artist', title: 'Artist work', note: 'Songs with Julian Michel.' },
+  { key: 'mix', title: 'Mixing examples', note: 'Mix examples from my engineering work — the part of the craft I enjoyed most.' },
+];
+
+const byPlays = (a: Track, b: Track) => b.plays - a.plays;
+const featured = [...tracks].sort(byPlays).slice(0, 4);
+const featuredIds = new Set(featured.map((t) => t.id));
+
+const clean = (t: string) => t.replace(/^JOE T\.\s*-?\s*/, '').replace(/\s+\|\s+/g, ' · ');
+const mmss = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+const year = (d: string) => d.slice(0, 4);
+
+// the waveform is SoundCloud's own peak data, drawn as terminal bars — nothing loads from SoundCloud until "play"
+const bars = (w: number[]) =>
+  w.map((v, i) => `<rect x="${i * 5}" y="${(1 - Math.max(v, 0.06)) * 20}" width="3" height="${Math.max(v, 0.06) * 40}" />`).join('');
+---
+<Base title="Music" description="JOE T. — productions, mixes and generative experiments by Josef Tot. Ableton for writing, Pro Tools for mixing." cmd="ls ~/music --sort=plays">
+  <h1>Music</h1>
+  <div class="prose" style="margin-top:2rem">
+    <p class="lede">
+      Before most of my time went into code, it went into music. As <strong>JOE T.</strong> I produced beats, wrote tracks and mixed
+      for other artists &mdash; 59 of them are still up on <a href="https://soundcloud.com/joseftot">SoundCloud</a>.
+    </p>
+    <p>
+      <strong>Ableton Live</strong> was where things got written: fast, loop-first, and happy to be abused. Some of the tracks below
+      were not really "written" at all &mdash; I set up follow actions and Max for Live devices and let the rules decide what came
+      next, then kept the best minutes. One of those generated beats ended up sold to a major label.
+    </p>
+    <p>
+      For mixing I always went back to <strong>Pro Tools</strong>. Its workflow is still the best I know for that job: the edit
+      window, the mixer that behaves like a console, and clip gain. Writing and mixing are
+      different jobs, and they deserve different tools.
+    </p>
+    <p>
+      It has been a while. I stopped keeping up, and the field did not wait &mdash; stem separation, AI-assisted mastering and full
+      song generation from a text prompt all arrived in the meantime. I want to find out what is actually useful for someone who
+      likes doing the work themselves, and I will write about it here.
+    </p>
+  </div>
+
+  <h2 class="section-h">Most played</h2>
+  <ol class="tracks" data-tracks>
+    {featured.map((t) => (
+      <li class="track" data-id={t.id} data-url={t.url}>
+        <button type="button" class="play" aria-label={`Play ${clean(t.title)}`}>&#9654;</button>
+        <div class="meta">
+          <a class="ttl" href={t.url} rel="noopener">{clean(t.title)}</a>
+          <span class="sub">{t.genre} · {year(t.date)} · {mmss(t.sec)} · {t.plays.toLocaleString('en')} plays</span>
+        </div>
+        <svg class="wave" viewBox="0 0 240 40" preserveAspectRatio="none" aria-hidden="true" set:html={bars(t.wave)} />
+      </li>
+    ))}
+  </ol>
+
+  {GROUPS.map((g, gi) => {
+    const list = tracks.filter((t) => t.cat === g.key && !featuredIds.has(t.id)).sort(byPlays);
+    return list.length > 0 && (
+      <details class="track-group" open={gi < 2}>
+        <summary><h2 class="section-h">{g.title} <span class="dim">({list.length})</span></h2></summary>
+        <p class="dim tracks-note">{g.note}</p>
+        <ol class="tracks" data-tracks>
+          {list.map((t) => (
+            <li class="track" data-id={t.id} data-url={t.url}>
+              <button type="button" class="play" aria-label={`Play ${clean(t.title)}`}>&#9654;</button>
+              <div class="meta">
+                <a class="ttl" href={t.url} rel="noopener">{clean(t.title)}</a>
+                <span class="sub">{t.genre} · {year(t.date)} · {mmss(t.sec)}</span>
+              </div>
+              <svg class="wave" viewBox="0 0 240 40" preserveAspectRatio="none" aria-hidden="true" set:html={bars(t.wave)} />
+            </li>
+          ))}
+        </ol>
+      </details>
+    );
+  })}
+
+  <p class="tip">
+    Pressing <kbd>&#9654;</kbd> loads SoundCloud's player for that one track. Until then nothing is requested from SoundCloud &mdash;
+    after that, their privacy terms apply. Most uploads from 2017 are 38-second previews.
+  </p>
+  <script is:inline src="/js/music.js" defer slot="scripts"></script>
+</Base>

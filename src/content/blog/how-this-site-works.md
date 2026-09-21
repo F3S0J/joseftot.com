@@ -6,7 +6,7 @@ tags: [meta, web, astro]
 ---
 
 This site looks like a terminal, but underneath it is about as boring as a website
-can be, on purpose: static HTML, one stylesheet, three small scripts.
+can be, on purpose: static HTML, one stylesheet, a few small scripts.
 
 ## The stack
 

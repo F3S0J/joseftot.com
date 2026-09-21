@@ -5,26 +5,41 @@ const jsonld = {
   '@type': 'Person',
   name: 'Josef Tot',
   url: 'https://joseftot.com/',
+  email: 'mailto:info@joseftot.com',
   jobTitle: 'IT professional and developer',
+  sameAs: ['https://github.com/F3S0J', 'https://soundcloud.com/joseftot'],
 };
 ---
-<Base title="About" description="Who is behind joseftot.com." cmd="cat about.md" jsonld={jsonld}>
+<Base title="About" description="Josef Tot: IT guy and developer in Austria, building agentic systems that automate real business work." cmd="cat about.md" jsonld={jsonld}>
   <h1>About</h1>
   <div class="prose" style="margin-top:2rem">
     <p>
       I am Josef Tot, an IT guy and developer based in Austria. This site is where I keep my notes in the open:
       how I approach problems, the tools I use, and the projects that come out of it.
     </p>
-    <p><span class="ph">[PLACEHOLDER]</span> Two or three sentences on your background: what you do for a living, what kind of systems you work on, how long you have been at it.</p>
+    <p>
+      Most of my work right now is <strong>agentic systems</strong>: teams of AI agents that do real business work.
+      That means research, marketing, product listings, regulatory paperwork, CAD plans, legal research. And
+      the plumbing that keeps them honest: sourced facts, measured output, humans at the gates. My goal is to help
+      other people automate their businesses the same way, on whatever platform suits them.
+    </p>
+    <p>
+      Before that, and hopefully again, there was <a href="/music/">music</a>: producing and mixing as JOE T.
+    </p>
 
     <h2>What you will find here</h2>
     <ul>
-      <li><a href="/blog/">Blog</a> &mdash; thoughts and methods, written down while they are still fresh.</li>
+      <li><a href="/blog/">Blog</a> &mdash; methods and field notes, written down while they are still fresh.</li>
       <li><a href="/projects/">Projects</a> &mdash; things I built, with an honest status next to each.</li>
+      <li><a href="/music/">Music</a> &mdash; productions, mixes and generative experiments.</li>
       <li><a href="/play/">A game</a> &mdash; because every proper terminal has one hidden somewhere.</li>
     </ul>
 
     <h2>Contact</h2>
-    <p><span class="ph">[PLACEHOLDER]</span> e-mail address / GitHub / LinkedIn &mdash; whichever you want public.</p>
+    <ul>
+      <li>E-mail: <a href="mailto:info@joseftot.com">info@joseftot.com</a></li>
+      <li>GitHub: <a href="https://github.com/F3S0J">github.com/F3S0J</a></li>
+      <li>SoundCloud: <a href="https://soundcloud.com/joseftot">soundcloud.com/joseftot</a></li>
+    </ul>
   </div>
 </Base>

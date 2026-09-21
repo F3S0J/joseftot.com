@@ -157,14 +157,14 @@
   }
   function pad(s, n) { s = String(s); while (s.length < n) s += ' '; return s; }
 
-  var DIRS = { blog: '/blog/', projects: '/projects/', about: '/about/', play: '/play/', home: '/', '~': '/', '/': '/', '..': null, imprint: '/imprint/' };
+  var DIRS = { blog: '/blog/', projects: '/projects/', music: '/music/', about: '/about/', play: '/play/', home: '/', '~': '/', '/': '/', '..': null, imprint: '/imprint/' };
 
   var commands = {
     help: function () {
       print([
         'AVAILABLE COMMANDS',
         '  ls              list what is here',
-        '  cd &lt;dir&gt;        blog | projects | about | ~ | ..',
+        '  cd &lt;dir&gt;        blog | projects | music | about | ~ | ..',
         '  cat &lt;name&gt;      open a post or project (tab completes)',
         '  theme &lt;name&gt;    ' + THEMES.join(' | '),
         '  play            space invaders',
@@ -177,7 +177,7 @@
     ls: function () {
       var s = section();
       if (!s) {
-        print('<a href="/blog/">blog/</a>      <a href="/projects/">projects/</a>      <a href="/about/">about.md</a>      <a href="/play/">invaders*</a>      <a href="/rss.xml">rss.xml</a>');
+        print('<a href="/blog/">blog/</a>      <a href="/projects/">projects/</a>      <a href="/music/">music/</a>      <a href="/about/">about.md</a>      <a href="/play/">invaders*</a>      <a href="/rss.xml">rss.xml</a>');
         return;
       }
       loadIndex(function (ix) {
@@ -214,6 +214,7 @@
       else print('themes: ' + THEMES.join(', ') + '\ncurrent: ' + root.getAttribute('data-theme'));
     },
     play: function () { go('/play/'); },
+    github: function () { print('<a href="https://github.com/F3S0J">github.com/F3S0J</a>'); },
     whoami: function () { print('guest  <span class="dim">(uid=1000, groups=visitors,curious)</span>'); },
     date: function () { print(esc(new Date().toString())); },
     pwd: function () { print(esc(cwd().replace('~', '/home/josef'))); },
@@ -340,7 +341,7 @@
         else if (hits.length > 1) print(hits.join('   '));
       };
       if (parts.length === 1) complete(Object.keys(commands));
-      else if (/^(cd)$/.test(parts[0])) complete(['blog', 'projects', 'about', 'play']);
+      else if (/^(cd)$/.test(parts[0])) complete(['blog', 'projects', 'music', 'about', 'play']);
       else if (/^(theme)$/.test(parts[0])) complete(THEMES);
       else loadIndex(function (ix) {
         var s = section();

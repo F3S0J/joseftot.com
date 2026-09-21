@@ -1,19 +1,38 @@
 {
 	admin off
 	auto_https off
+	persist_config off
 }
 
 :{$PORT:8080} {
 	root * /srv
+
+	# A static site answers GET and HEAD. Everything else is refused before it reaches a handler.
+	@disallowed not method GET HEAD
+	respond @disallowed 405
+
+	# Nothing starting with a dot is served, except /.well-known/
+	@dotfiles {
+		path_regexp dot /\.
+		not path /.well-known/*
+	}
+	respond @dotfiles 404
+
 	encode zstd gzip
 	file_server
 
 	header {
+		-Server
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
 		X-Content-Type-Options nosniff
+		X-Frame-Options DENY
 		Referrer-Policy strict-origin-when-cross-origin
-		Permissions-Policy "geolocation=(), camera=(), microphone=()"
-		Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-ancestors 'none'"
+		Cross-Origin-Opener-Policy same-origin
+		Cross-Origin-Resource-Policy same-site
+		Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+		Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://w.soundcloud.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
 	}
+
 	@immutable path /_astro/*
 	header @immutable Cache-Control "public, max-age=31536000, immutable"
 
