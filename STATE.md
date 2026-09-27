@@ -16,7 +16,7 @@ Last session: 21–22 Sep 2026. Live preview: https://web-production-4ef5e.up.ra
 6. 2FA on Railway, GitHub, domain registrar, Cloudflare.
 
 ## Rules for content
-- Platform-agnostic: "agentic systems", never "Claude Code".
+- Platform-agnostic: "agentic systems", never "Claude Code". Exception (Josef, 27.09.2026): a post about a tool that only works with Claude (e.g. claude-usage-widget) names it openly.
 - No active legal cases; CAD post never names real plots or owners.
 - Unverified wreck candidate positions never go public; update `A:/shipwreck-public` by hand, never push `A:/shipwreck`.
 
