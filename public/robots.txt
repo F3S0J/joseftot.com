@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://joseftot.com/sitemap-index.xml
+Sitemap: https://www.joseftot.com/sitemap-index.xml

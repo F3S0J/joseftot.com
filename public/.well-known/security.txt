@@ -1,4 +1,4 @@
 Contact: mailto:info@joseftot.com
 Expires: 2027-09-21T00:00:00.000Z
 Preferred-Languages: en, de
-Canonical: https://joseftot.com/.well-known/security.txt
+Canonical: https://www.joseftot.com/.well-known/security.txt
