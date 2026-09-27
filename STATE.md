@@ -5,7 +5,7 @@ Last session: 21–22 Sep 2026. Live preview: https://web-production-4ef5e.up.ra
 ## Done
 - Site: home, blog (7 posts), projects (10), music (59 SoundCloud tracks, click-to-load player), about, imprint, Space Invaders
 - Hardened: strict CSP, HSTS, GET/HEAD only, dotfiles 404, container runs as `nobody`, security.txt, dependabot
-- Public repos (F3S0J): joseftot.com, wreckscan, raplab
+- Public repos (F3S0J): joseftot.com, wreckscan, raplab, claude-usage-widget
 
 ## Open — start here next time
 1. **siteplan repo not pushed** (permission block). Clean copy in `A:/siteplan-public`; run the push yourself, then check the site's link works.
