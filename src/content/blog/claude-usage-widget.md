@@ -1,6 +1,6 @@
 ---
 title: "A usage meter for Claude Code that stays on screen"
-description: "An always-on-top Windows widget that shows your Claude subscription limits, plus an F9 key that brings the Claude terminal up and puts it away. One PowerShell file. Plus the three things that broke on day one."
+description: "An always-on-top Windows widget that shows your Claude subscription limits, plus an F9 key that brings the Claude terminal up and puts it away. Plus the three things that broke on day one, and an update with a daily budget and token statistics."
 date: 2026-09-27T18:00:00
 tags: [agents, tools, windows, howto]
 ---
@@ -12,14 +12,17 @@ whatever the agent is doing, and I typed it often enough that it became a habit 
 So now the numbers just sit in the corner of the screen.
 
 <figure>
-<img src="/img/claude-usage-widget.png" alt="The widget: session and weekly limits as bars, with the time until each one resets" width="500" height="354" style="width:min(100%,380px);background:none;border:0">
+<img src="/img/claude-usage-widget.png" alt="The widget: limit bars with a daily budget, then tokens today, API value, burn rate, split by model, subagent share and a 7-day chart" width="328" height="682" style="width:min(100%,328px);background:none;border:0">
 </figure>
 
-That's the whole thing: one bar per limit (the 5-hour session, the week, and any per-model
+The top part is the core: one bar per limit (the 5-hour session, the week, and any per-model
 week your plan has) with the time until it resets. The bar turns amber at 60 % and red at 85 %.
 It sits on top of every window, you drag it wherever you like, and it starts with Windows.
+Everything below the bars came a few days later and is described in the
+[update at the end](#update-2-october-a-daily-budget-and-token-statistics).
 
-It's one PowerShell file with no install and nothing to download besides the repo:
+It's one PowerShell file and one small C# file, with no install and nothing to download
+besides the repo:
 **[github.com/F3S0J/claude-usage-widget](https://github.com/F3S0J/claude-usage-widget)**.
 
 ## Where the numbers come from
@@ -86,3 +89,46 @@ powershell -ExecutionPolicy Bypass -File .\install-shortcuts.ps1
 That puts a *Claude Usage* shortcut on the Desktop and in the Startup folder. You need Windows
 10 or 11, Claude Code logged in with a Pro or Max subscription, and Windows Terminal for the
 hotkey. MIT licensed. Not affiliated with Anthropic.
+
+## Update, 2 October: a daily budget and token statistics
+
+After a week with the bars, the question changed. It was no longer "how much is left?" but
+"how much of the week can I spend *today*?" A weekly limit that resets with 40 % unused is
+wasted, and one that runs out on day five is worse.
+
+**The daily budget.** Each weekly row now has a line like `today: 7% left of 14% daily
+budget`, and a white tick on the bar marks where the bar should be by midnight. The budget
+is whatever was free when the day began, spread evenly over the time until the reset. What
+you don't use today rolls into the following days, so the figure corrects itself. A second
+line says where the week is heading: "on pace for 56% by the reset".
+
+Getting "today" right took three attempts in one afternoon. The first version counted from
+the moment the widget started, so starting it at 4 pm gave a third of a day's budget. The
+second counted the whole day but treated everything used before the start as yesterday's.
+The version that works remembers the last value it saw each day and uses that as the next
+morning's starting point.
+
+**Token statistics.** The usage endpoint only gives percentages. The actual token counts
+are in the transcripts Claude Code writes to `%USERPROFILE%\.claude\projects`, one line per
+reply. A small C# class reads them on a background thread, and only what was appended since
+the last pass, so it costs nothing to refresh every 15 seconds and never touches the
+rate-limited server. From that the widget shows:
+
+- tokens today, split into input, output and cache
+- what the same usage would cost at API list prices, today and since the weekly reset
+- the burn rate over the last hour
+- how many tokens 1 % of the weekly limit is worth
+- the split by model, the share used by subagents, and the day's most expensive sessions
+- a bar chart of the last seven days
+
+Two caveats. The transcripts only cover this machine, so chats in the browser are missing
+and the "1 % of the week" figure is an estimate. And the dollar figures are a comparison, not
+a bill: they use list prices written into the code, which need updating when prices change.
+
+The number that surprised me most was the cache. On the day of the screenshot the model
+wrote 1.2 million tokens and read 230 million from cache. Almost all the volume of an agent
+session is the same context being read again on every step.
+
+**Preferences and looks.** Ten blocks make a tall widget, so right-click → Preferences…
+switches each one off. The same menu has four colour themes, background transparency and a
+size setting; Ctrl + mouse wheel resizes it too.
