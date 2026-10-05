@@ -16,6 +16,6 @@
     "astro": "^7.3.3"
   },
   "devDependencies": {
-    "figlet": "^1.11.4"
+    "figlet": "^1.12.0"
   }
 }
