@@ -24,6 +24,8 @@ Everything below the bars came a few days later and is described in the
 It's one PowerShell file and one small C# file, with no install and nothing to download
 besides the repo:
 **[github.com/F3S0J/claude-usage-widget](https://github.com/F3S0J/claude-usage-widget)**.
+There is also a [one-page overview](https://f3s0j.github.io/claude-usage-widget/) with a mock
+of the widget and its themes.
 
 ## Where the numbers come from
 

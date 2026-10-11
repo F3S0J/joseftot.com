@@ -5,6 +5,7 @@ status: shipped
 year: 2026
 stack: ["PowerShell 5.1", "WPF", "C#", "Win32 RegisterHotKey"]
 repo: "https://github.com/F3S0J/claude-usage-widget"
+url: "https://f3s0j.github.io/claude-usage-widget/"
 order: 11
 ---
 

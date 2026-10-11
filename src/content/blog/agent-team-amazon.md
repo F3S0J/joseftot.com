@@ -143,3 +143,36 @@ Architecturally it is the same pattern as above, grown up:
 
 None of this depends on a particular model vendor. The pieces are a language model, an image
 model, a database, a queue and an API client. The discipline is the product.
+
+## Update, October: what changed since
+
+**The compliance architecture moved.** The section above describes Sanopta as its own web
+app with a job queue. I have since frozen that app and rebuilt its data model as modules
+inside an ERP, so that device data, orders and stock have one master instead of two. The
+pattern is unchanged: locked facts, generated output, a person at the gate. The plumbing is
+different. The long version is in
+[One lead, many workers](/blog/erp-port-lead-and-workers/).
+
+**The pipeline grew behind the publisher.** A live listing is where the work starts, so three
+more specialists joined:
+
+- an **ads planner** that works out where a product really stands (reviews, rank, price,
+  margin) and derives bids from its break-even point and from real search-term data, not
+  from a budget guess,
+- a **customer-service desk** that pulls every buyer message, return and claim into one case
+  per order and tracks the reply deadlines. It drafts the answer; a person sends it,
+- an **off-page analyst**, which has one idea worth passing on.
+
+**Ask the answer engine who it cites.** Links from outside do nothing for the ranking inside
+a marketplace. Being named in the sources that AI answers are built from is a different
+matter, and more and more buying advice starts there. So the analyst does not guess a list of
+websites to approach. It takes the real buyer questions from the research, puts them to a
+search-backed AI model, and records two things: which brands the answer names, and which
+domains it cites. The first list is a share-of-voice measurement. The second is the placement
+plan, measured instead of guessed.
+
+The first run was sobering. Across four buyer questions about one product, our brand's share
+was zero, and the citations worth having came from a handful of comparison sites, care
+portals and news sites. It also showed how fragile the method is: one wrong category word in the prompts, and
+the run came back full of bar stools instead of shower stools. A person reads the prompts
+before a run.

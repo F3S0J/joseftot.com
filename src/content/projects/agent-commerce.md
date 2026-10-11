@@ -14,4 +14,10 @@ the listing; a publisher pushes it through the marketplace API, preview first.
 
 Seven of the ten stages need a human OK before they count as done.
 
+Since September three more specialists work behind the publisher: an ads planner that derives
+bids from each product's break-even point, a customer-service desk with one case per order
+and the reply deadlines in view, and an off-page analyst that measures which brands and which
+websites AI answers actually cite. The facts ledger is moving into an
+[ERP](/projects/erp-rollout/), so a listing and an invoice read the same product record.
+
 The long write-up, with the lessons: [An agent team that ships Amazon listings](/blog/agent-team-amazon/).

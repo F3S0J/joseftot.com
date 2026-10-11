@@ -111,7 +111,8 @@ never a weight. The word "hopeless" is banned until the perimeter has been walke
 
 Debating one contested issue in depth costs a few euros in model usage, mostly because each
 role re-reads its sources many times. That shaped the design: a cheap pass over everything,
-an expensive debate only where it pays.
+an expensive debate only where it pays. *(That figure turned out to be too low. See the
+[update](#update-october-what-it-really-costs-and-a-cheaper-route) at the end.)*
 
 ## What this means for everyone else
 
@@ -122,3 +123,34 @@ two-sided reading, as long as you build them so they cannot skip the reading.
 
 You still need a lawyer to represent you. But you can walk into that meeting knowing the norms,
 the case law and the weak spot of your own position, and that changes the conversation.
+
+## Update, October: what it really costs, and a cheaper route
+
+The cost paragraph above was too low by about a factor of three. The figure I had logged for
+each debate role came from the cost the tool reports about itself. Priced from the full
+transcripts, the same sessions came out at roughly three to five times that. The usage meter
+of my plan agreed with the transcripts: a run that was projected at 7 to 9 percent of a usage
+window took more than 40.
+
+Two things changed because of it.
+
+**Projections start from measured sessions.** Before a run, the estimate is built from what
+earlier sessions actually cost in the transcripts, not from the tool's own number.
+
+**There is a cheap route next to the debate.** When the sources for an issue are already
+fetched and stored, one call to a long-context model gets all of them inline and is asked for
+the verdict, followed by a check of the facts and quotations. On one issue I ran both routes.
+The single call took five minutes and about five dollars. It reached the same verdict as the
+full debate and quoted 59 of 63 passages word for word; the four misses were harmless.
+
+But the debate had done three things the single call did not. It fetched rulings that were
+not in the store yet. It found a sentence of the statute that nobody had answered. And it
+caught a contradiction between two facts that the single call had treated as proven.
+
+So the verdict is the cheap part. What the adversarial structure is really good at is
+finding **what is missing from the file**. I now offer both and pick by how much is at stake.
+
+One more thing grew out of the same rule of "no fetch, no citation": a desk for tax
+questions. It reads the tax statutes in the version that applied on a given date, and the
+finance ministry's guidelines by margin number, and sorts every route to an answer into
+clean, clean under conditions, grey, and not possible, each with its paragraph.
